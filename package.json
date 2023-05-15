@@ -1,0 +1,22 @@
+{
+  "name": "coffeemasters-pwa",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:firtman/coffeemasters-pwa.git",
+  "author": "n.luparev <nikita.luparev@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "npx serve -s",
+    "dev": "yarn parcel index.html"
+  },
+  "volta": {
+    "node": "18.16.0",
+    "yarn": "1.22.19"
+  },
+  "devDependencies": {
+    "@parcel/packager-raw-url": "2.8.3",
+    "@parcel/transformer-webmanifest": "2.8.3",
+    "parcel": "^2.8.3",
+    "serve": "^14.2.0"
+  }
+}
