@@ -1,10 +1,21 @@
 import Menu from './Menu.js';
 
+const CARD_KEY = 'cm-card';
+
 const Order = {
   cart: [],
-  load: () => {},
+  load: () => {
+    if (localStorage.getItem(CARD_KEY)) {
+      try {
+        Order.cart = JSON.parse(localStorage.getItem(CARD_KEY));
+        Order.render();
+      } catch (e) {
+        console.error('Data in Web Storage is corrupted');
+      }
+    }
+  },
   save: () => {
-    localStorage.setItem('cm-cart', JSON.stringify(Order.cart));
+    localStorage.setItem(CARD_KEY, JSON.stringify(Order.cart));
   },
   add: async (id) => {
     const product = await Menu.getProductById(id);
