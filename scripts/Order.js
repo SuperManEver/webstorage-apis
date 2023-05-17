@@ -1,6 +1,6 @@
 import Menu from './Menu.js';
 
-const CARD_KEY = 'cm-card';
+const CARD_KEY = 'cm-cart';
 
 const Order = {
   cart: [],
