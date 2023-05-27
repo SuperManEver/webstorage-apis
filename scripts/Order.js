@@ -2,9 +2,42 @@ import Menu from './Menu.js';
 
 const CARD_KEY = 'cm-cart';
 
+const IDB_NAME = 'cm-storage';
+const IDB_VERSION = 1;
+const IDB_STORE = 'order';
+const IDB_KEY = 'cart';
+
 const Order = {
   cart: [],
-  load: () => {
+
+  openDB: async () => {
+    return await idb.openDB(IDB_NAME, IDB_VERSION, {
+      async upgrade(db) {
+        await db.createObjectStore(IDB_STORE);
+      },
+    });
+  },
+
+  save: async () => {
+    const db = await Order.openDB();
+    await db.put(IDB_STORE, JSON.stringify(Order.cart), IDB_KEY);
+  },
+
+  load: async () => {
+    const db = await Order.openDB();
+    const cart = await db.get(IDB_STORE, IDB_KEY);
+
+    if (cart) {
+      try {
+        Order.cart = JSON.parse(cart);
+        Order.render();
+      } catch (e) {
+        console.error('Data in IndexedDB is corrupted');
+      }
+    }
+  },
+
+  loadWS: () => {
     if (localStorage.getItem(CARD_KEY)) {
       try {
         Order.cart = JSON.parse(localStorage.getItem(CARD_KEY));
@@ -14,7 +47,8 @@ const Order = {
       }
     }
   },
-  save: () => {
+
+  saveWS: () => {
     localStorage.setItem(CARD_KEY, JSON.stringify(Order.cart));
   },
   add: async (id) => {
