@@ -19,12 +19,12 @@ const Menu = {
     // Cache First
     const db = await Menu.openDB();
 
-    if ((await db.count('categories')) == 0) {
+    if ((await db.count(IDB_STORE)) == 0) {
       const data = await API.fetchMenu();
-      data.forEach((category) => db.add('categories', category));
+      data.forEach((category) => db.add(IDB_STORE, category));
     }
 
-    Menu.data = await db.getAll('categories');
+    Menu.data = await db.getAll(IDB_STORE);
     Menu.render();
   },
 
