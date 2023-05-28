@@ -37,6 +37,14 @@ const Menu = {
       }
     }
     Menu.render();
+
+    // Cache images
+    if (Menu.data) {
+      const imageCache = await caches.open('cm-images');
+      Menu.data.forEach((c) =>
+        imageCache.addAll(c.products.map((p) => `/data/images/${p.image}`)),
+      );
+    }
   },
 
   loadCacheFirst: async () => {
