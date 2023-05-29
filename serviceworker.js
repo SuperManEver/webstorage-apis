@@ -20,6 +20,10 @@ self.addEventListener('install', async (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+  if (event.request.url === '/order') {
+    event.respondWith(fetch('/'));
+  }
+
   event.respondWith(
     (async () => {
       const cachedResponse = await caches.match(event.request);
